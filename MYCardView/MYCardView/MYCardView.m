@@ -112,6 +112,7 @@ static const CGFloat defaultHeight = 480;
     UIView *dragView = pan.view;
     if (pan.state == UIGestureRecognizerStateChanged) { //正在拖动
         NSLog(@"----卡片开始移动----");
+        _dragMode = MYCardViewDragByHandMode;
         if ([self.delegate respondsToSelector:@selector(cardView:cardDidSCroll:dragMode:)]) {
             [self.delegate cardView:self cardDidSCroll:_dragIndex dragMode:_dragMode];
         }
@@ -287,6 +288,7 @@ static const CGFloat defaultHeight = 480;
 
 - (void)excuteSlide:(MYCardViewDragDirectionType)direction
 {
+    _dragMode = MYCardViewDragByClickMode;
     CGPoint center = self.firstView.center;
     if (direction == MYCardViewDragDirectionLeftType) {
         center.x = - CGRectGetWidth(self.firstView.frame)*0.5;
