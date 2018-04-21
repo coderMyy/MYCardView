@@ -73,14 +73,18 @@ _cardView.delegate = self;
 ## 1. 手势左滑不喜欢，右滑喜欢
 </p>
 </p>
+
 ![image](https://github.com/coderMyy/MYCardView/blob/master/examplePic/pic1.gif)
+
 </p>
 </p>
 
 ## 2. 按钮点击喜欢，不喜欢
 </p>
 </p>
+
 ![image](https://github.com/coderMyy/MYCardView/blob/master/examplePic/pic2.gif)
+
 </p>
 </p>
 
