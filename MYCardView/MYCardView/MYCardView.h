@@ -21,93 +21,81 @@ typedef enum {
 
 typedef enum {
     
-    MYCardViewDragByHandMode  = 0 << 0,
-    MYCardViewDragByClickMode = 1 << 0
+    MYCardViewDragByClick  = 0 << 0,
+    MYCardViewDragByHand   = 1 << 0
     
 }MYCardViewDragMode;
 
 @protocol MYCardViewDeletagte <NSObject>
-
 @optional
 
-
 /**
- 卡片成功滑动
-
- @param cardView <#cardView description#>
+ 卡片开始滑动
+ @param handleView <#handleView description#>
  @param direction <#direction description#>
  @param index <#index description#>
  @param dragMode <#dragMode description#>
  */
-- (void)cardView:(MYCardView *)cardView effectiveDragDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
-
+- (void)handleView:(MYCardView *)handleView beginMoveDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
+/**
+ 卡片成功滑动
+ @param handleView <#handleView description#>
+ @param direction <#direction description#>
+ @param index <#index description#>
+ */
+- (void)handleView:(MYCardView *)handleView effectiveDragDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
 
 /**
  取消卡片滑动
-
- @param cardView <#cardView description#>
+ @param handleView <#handleView description#>
  @param direction <#direction description#>
  @param index <#index description#>
- @param dragMode <#dragMode description#>
  */
-- (void)cardView:(MYCardView *)cardView cancelDrag:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
-
-
+- (void)handleView:(MYCardView *)handleView cancelDrag:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
 /**
  点击当前卡片
-
- @param cardView <#cardView description#>
+ @param handleView <#handleView description#>
  @param index <#index description#>
  */
-- (void)cardView:(MYCardView *)cardView didClickItemAtIndex:(NSInteger)index;
-
-
+- (void)handleView:(MYCardView *)handleView didClickItemAtIndex:(NSInteger)index;
 /**
  卡片正在滑动
-
- @param cardView <#cardView description#>
+ @param handleView <#handleView description#>
  @param index <#index description#>
- @param dragMode <#dragMode description#>
  */
-- (void)cardView:(MYCardView *)cardView cardDidSCroll:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
-
-
+- (void)handleView:(MYCardView *)handleView cardDidScroll:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
 /**
  卡片结束滑动
-
- @param cardView <#cardView description#>
+ @param handleView <#handleView description#>
  @param index <#index description#>
- @param dragMode <#dragMode description#>
  */
-- (void)cardView:(MYCardView *)cardView cardEndScroll:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
+- (void)handleView:(MYCardView *)handleView cardEndScroll:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode;
 @end
 
 @protocol MYCardViewDataSource <NSObject>
 
 @required
 
-
 /**
  卡片Item
-
- @param cardView <#cardView description#>
+ 
+ @param handleView <#handleView description#>
  @param index <#index description#>
  @return <#return value description#>
  */
-- (__kindof MYCardViewItem *)cardView:(MYCardView *)cardView itemForIndex:(NSInteger)index;
-
+- (__kindof MYCardViewItem *)handleView:(MYCardView *)handleView itemForIndex:(NSInteger)index;
 
 /**
  数据源个数
-
- @param cardView <#cardView description#>
+ 
+ @param handleView <#handleView description#>
  @return <#return value description#>
  */
-- (NSInteger)cardViewPageCountForView:(MYCardView *)cardView;
+- (NSInteger)handleViewPageCountForView:(MYCardView *)handleView;
 @optional
 
-- (CGSize)cardViewSizeForItem:(MYCardView *)cardView;
-- (CGFloat)cardViewTopInsetForItem:(MYCardView *)cardView;
+- (CGSize)handleViewSizeForItem:(MYCardView *)handleView;
+- (CGFloat)handleViewTopInsetForItem:(MYCardView *)handleView;
 
 @end
 
@@ -121,7 +109,7 @@ typedef enum {
 
 /**
  手动滑动
-
+ 
  @param direction <#direction description#>
  */
 - (void)excuteSlide:(MYCardViewDragDirectionType)direction;
@@ -132,7 +120,7 @@ typedef enum {
 /**
  当前索引
  */
-@property (nonatomic, assign) NSInteger currentIndex;
-
+@property (nonatomic, assign,readonly) NSInteger currentIndex;
+@property (nonatomic, assign) BOOL enable;
 @end
 

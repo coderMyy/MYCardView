@@ -46,6 +46,7 @@
     NSString *bundlePath = [[NSBundle mainBundle]pathForResource:@"picsSource" ofType:@"bundle"];
     NSString *imgPath = [[NSBundle bundleWithPath:bundlePath]pathForResource:carModel.imgName ofType:@"jpg"];
     self.coverImgView.image = [UIImage imageWithContentsOfFile:imgPath];
+    NSLog(@"%@",self.coverImgView.image);
 }
 
 - (UILabel *)nameLabel
