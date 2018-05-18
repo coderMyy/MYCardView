@@ -11,54 +11,65 @@
 
 ```
 #pragma mark - dataSource
-- (NSInteger)cardViewPageCountForView:(MYCardView *)cardView
+- (NSInteger)handleViewPageCountForView:(MYCardView *)handleView
 {
 return self.dataSource.count;
 }
 
-- (CGSize)cardViewSizeForItem:(MYCardView *)cardView
+- (CGSize)handleViewSizeForItem:(MYCardView *)handleView
 {
 return CGSizeMake(345,480);
 }
 
-- (CGFloat)cardViewTopInsetForItem:(MYCardView *)cardView
+- (CGFloat)handleViewTopInsetForItem:(MYCardView *)handleView
 {
-return 10;
+return 12;
 }
 
-- (MYCardViewItem *)cardView:(MYCardView *)cardView itemForIndex:(NSInteger)index
+- (__kindof MYCardViewItem *)handleView:(MYCardView *)handleView itemForIndex:(NSInteger)index
 {
+if (index>self.dataSource.count-1) {
+return nil;
+}
 //TestCardItem类继承于MYCardViewItem
-TestCardItem *cardItem = [cardView dequeueReusableItemWithIdentifier:@"TestCardItem"];
+TestCardItem *cardItem = [handleView dequeueReusableItemWithIdentifier:@"TestCardItem"];
 cardItem.carModel = self.dataSource[index];
 return cardItem;
 }
 
+
+
 #pragma mark - delegate
-- (void)cardView:(MYCardView *)cardView didClickItemAtIndex:(NSInteger)index
+- (void)handleView:(MYCardView *)handleView didClickItemAtIndex:(NSInteger)index
 {
 NSLog(@"==============点击了卡片===========索引%li",index);
 }
 
-- (void)cardView:(MYCardView *)cardView cardDidSCroll:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
+- (void)handleView:(MYCardView *)handleView beginMoveDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
 {
-NSLog(@"==============卡片正在滑动==========索引%li",index);
+NSLog(@"--------开始滑动--------");
 }
 
-- (void)cardView:(MYCardView *)cardView cardEndScroll:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
+- (void)handleView:(MYCardView *)handleView cardEndScroll:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
 {
-NSLog(@"==============卡片结束滑动==========索引%li",index);
+NSLog(@"--------滑动结束--------");
 }
 
-- (void)cardView:(MYCardView *)cardView cancelDrag:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
+- (void)handleView:(MYCardView *)handleView cardDidScroll:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
 {
-NSLog(@"============取消了卡片滑动============索引%li",index);
+NSLog(@"-------正在滑动----------");
 }
 
-- (void)cardView:(MYCardView *)cardView effectiveDragDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
+- (void)handleView:(MYCardView *)handleView cancelDrag:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
+{
+NSLog(@"------取消了第%li个的滑动",index);
+}
+
+- (void)handleView:(MYCardView *)handleView effectiveDragDirection:(MYCardViewDragDirectionType)direction itemIndex:(NSInteger)index dragMode:(MYCardViewDragMode)dragMode
 {
 NSLog(@"===========成功滑动卡片==========索引%li",index);
 }
+
 
 // 设置代理和数据源
 _cardView.dataSource = self;
